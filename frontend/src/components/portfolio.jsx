@@ -1,16 +1,23 @@
-
 import React, { useState, useEffect } from 'react';
 import { Github, Linkedin, Mail, Moon, Sun, Code, Monitor, Server, Utensils, Heart } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card.tsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs.tsx';
 import { Badge } from './ui/badge.tsx';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import jsLogo from '@/assets/logos/javascript-color.svg';
-import reactLogo from '@/assets/logos/react.svg';
-import nodeLogo from '@/assets/logos/nodedotjs-color.svg';
-import expressLogo from '@/assets/logos/express-color.svg';
-import tailwindLogo from '@/assets/logos/tailwindcss-color.svg';
-import mySqlLogo from '@/assets/logos/mysql-color.svg';
+import jsLogo from '../assets/logos/javascript-color.svg';
+import reactLogo from '../assets/react.svg';
+import nodeLogo from '../assets/logos/nodedotjs-color.svg';
+import expressLogo from '../assets/logos/express-color.svg';
+import tailwindLogo from '../assets/logos/tailwindcss-color.svg';
+import mySqlLogo from '../assets/logos/mysql-color.svg';
+import openAILogo from '../assets/logos/openai-color.svg';
+import mapBoxLogo from '../assets/logos/mapbox-color.svg'; // Fix logo imports
+import unbuntuLogo from '../assets/logos/ubuntu-color.svg'; // Fix spelling for 'ubuntu'
+import css3Logo from '../assets/logos/css3-color.svg';
+import puppeteerLogo from '../assets/logos/puppeteer-color.svg';
+import gitLogo from '../assets/logos/git-color.svg';
+import dockerLogo from '../assets/logos/docker-color.svg';
+import Skills from "@/components/skills.jsx";
 
 const Portfolio = () => {
     const [theme, setTheme] = useState('dark');
@@ -52,95 +59,26 @@ const Portfolio = () => {
                 'Utilizes neomorphic design for a modern look',
                 'Responsive layout for optimal viewing on various devices',
             ],
-            tags: ['React', 'Tailwind CSS', 'Responsive Design', 'Google Maps API'],
+            tags: ['React', 'Tailwind CSS', 'Responsive Design', 'Mapbox API'],
         },
     ];
 
     const skills = [
         { name: 'JavaScript', value: 90, logo: jsLogo, category: 'Language' },
+        { name: 'Mapbox', value: 90, logo: mapBoxLogo, category: 'Frontend' },
+        { name: 'Ubuntu', value: 90, logo: unbuntuLogo, category: 'Operating Systems' },
+        { name: 'CSS3', value: 80, logo: css3Logo, category: 'Frontend' },
+        { name: 'Puppeteer', value: 80, logo: puppeteerLogo, category: 'Backend' },
+        { name: 'Git', value: 85, logo: gitLogo, category: 'Version Control' },
+        { name: 'Docker', value: 85, logo: dockerLogo, category: 'Backend' },
         { name: 'React', value: 85, logo: reactLogo, category: 'Frontend' },
         { name: 'Node.js', value: 80, logo: nodeLogo, category: 'Backend' },
         { name: 'MySQL', value: 75, logo: mySqlLogo, category: 'Database' },
         { name: 'Express', value: 80, logo: expressLogo, category: 'Backend' },
-        { name: 'Full-Stack Development', value: 85, logo: jsLogo, category: 'Overall' },
-        { name: 'API Integration', value: 80, logo: jsLogo, category: 'Backend' },
-        { name: 'Data Visualization', value: 75, logo: jsLogo, category: 'Frontend' },
+        { name: 'OpenAI', value: 85, logo: openAILogo, category: 'AI' },
         { name: 'Tailwind CSS', value: 80, logo: tailwindLogo, category: 'Frontend' },
-        { name: 'Responsive Design', value: 85, logo: jsLogo, category: 'Frontend' },
+        { name: 'Responsive Design', value: 85, logo: css3Logo, category: 'Frontend' },
     ];
-
-    const SkillProgress = ({ value }) => (
-        <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-            <div
-                className="bg-blue-600 h-2.5 rounded-full transition-all duration-300"
-                style={{ width: `${value}%` }}
-            ></div>
-        </div>
-    );
-
-    const SkillsSection = ({ skills, theme }) => {
-        const [selectedCategory, setSelectedCategory] = useState('All');
-        const categories = ['All', ...new Set(skills.map(skill => skill.category))];
-
-        const filteredSkills = selectedCategory === 'All'
-            ? skills
-            : skills.filter(skill => skill.category === selectedCategory);
-
-        return (
-            <section className="mb-12">
-                <h2 className="text-2xl font-semibold mb-4">Skills</h2>
-                <Card className={`${
-                    theme === 'dark'
-                        ? 'bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-lg shadow-lg'
-                        : 'bg-white bg-opacity-50 backdrop-filter backdrop-blur-lg shadow-md'
-                } p-6`}>
-                    <div className="mb-6">
-                        <Tabs defaultValue="All" className="w-full">
-                            <TabsList>
-                                {categories.map(category => (
-                                    <TabsTrigger
-                                        key={category}
-                                        value={category}
-                                        onClick={() => setSelectedCategory(category)}
-                                    >
-                                        {category}
-                                    </TabsTrigger>
-                                ))}
-                            </TabsList>
-                        </Tabs>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="space-y-4">
-                            {filteredSkills.map((skill, index) => (
-                                <div key={index} className="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
-                                    <div className="flex items-center space-x-4 mb-2">
-                                        <img src={skill.logo} alt={skill.name} className="w-8 h-8" />
-                                        <h3 className="text-lg font-medium">{skill.name}</h3>
-                                    </div>
-                                    <div className="flex items-center space-x-4">
-                                        <div className="flex-grow">
-                                            <SkillProgress value={skill.value} />
-                                        </div>
-                                        <span className="font-semibold">{skill.value}%</span>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                        <div className="h-80">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={filteredSkills} layout="vertical">
-                                    <XAxis type="number" domain={[0, 100]} />
-                                    <YAxis dataKey="name" type="category" width={150} />
-                                    <Tooltip />
-                                    <Bar dataKey="value" fill="#8884d8" />
-                                </BarChart>
-                            </ResponsiveContainer>
-                        </div>
-                    </div>
-                </Card>
-            </section>
-        );
-    };
 
     return (
         <div className={`min-h-screen p-8 transition-colors duration-300 ${
@@ -192,31 +130,12 @@ const Portfolio = () => {
 
                     <section className="mb-12">
                         <h2 className="text-2xl font-semibold mb-4">Featured Projects</h2>
-                        <Tabs defaultValue="all" className="mb-6">
-                            <TabsList className={`${
-                                theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'
-                            } p-1 rounded-lg`}>
-                                <TabsTrigger value="all" className="px-4 py-2 rounded-md">All</TabsTrigger>
-                                <TabsTrigger value="fullstack" className="px-4 py-2 rounded-md">Full Stack</TabsTrigger>
-                                <TabsTrigger value="frontend" className="px-4 py-2 rounded-md">Frontend</TabsTrigger>
-                                <TabsTrigger value="backend" className="px-4 py-2 rounded-md">Backend</TabsTrigger>
-                            </TabsList>
-                            <TabsContent value="all">
-                                <ProjectGrid projects={projects} theme={theme} />
-                            </TabsContent>
-                            <TabsContent value="fullstack">
-                                <ProjectGrid projects={projects.filter(p => p.category === 'fullstack')} theme={theme} />
-                            </TabsContent>
-                            <TabsContent value="frontend">
-                                <ProjectGrid projects={projects.filter(p => p.category === 'frontend')} theme={theme} />
-                            </TabsContent>
-                            <TabsContent value="backend">
-                                <ProjectGrid projects={projects.filter(p => p.category === 'backend')} theme={theme} />
-                            </TabsContent>
-                        </Tabs>
+                        <ProjectGrid projects={projects} theme={theme} />
+                    </section>
+                    <section>
+                        <Skills/>
                     </section>
 
-                    <SkillsSection skills={skills} theme={theme} />
                 </main>
 
                 <footer className="mt-12 text-center text-opacity-60">
